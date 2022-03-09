@@ -1,17 +1,39 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <h4>{{response}}</h4>
+    <button @click="getData">가져오기</button>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import {onMounted} from "vue";
+import axios from "axios";
+// import data from "./data";
 
-export default {
+export default {  
   name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  components: {},
+  data(){
+    return {
+      response: "Home"
+    }
+  },
+  setup() {
+    // let response="1";    
+    // onMounted( async() => {
+    //   response = await axios.get("http://localhost:4000/1");
+    //   console.log(response)
+    // });
+  },
+  methods: {
+    async getData(){
+      const response = await axios.get("http://localhost:4000/1");
+      // console.log(response)
+      this.response = response.data
+    }
+  },
+};
 </script>
 
 <style>
