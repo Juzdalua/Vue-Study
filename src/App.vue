@@ -1,13 +1,13 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <div>
-    <h4>{{response}}</h4>
+    <h4>{{state.name}}</h4>
     <button @click="getData">가져오기</button>
   </div>
 </template>
 
 <script>
-// import {onMounted} from "vue";
+import {onMounted, reactive} from "vue";
 import axios from "axios";
 // import data from "./data";
 
@@ -19,13 +19,24 @@ export default {
       response: "Home"
     }
   },
+
   setup() {
-    // let response="1";    
-    // onMounted( async() => {
-    //   response = await axios.get("http://localhost:4000/1");
-    //   console.log(response)
-    // });
+    const state = reactive({
+      name: '',
+    });
+
+    onMounted( async() => {
+      const overview = await axios.get("http://localhost:4000/1");
+      if(overview){
+       state.name = overview.data ;
+      }//if
+    });
+    return {
+      state
+      };
   },
+
+
   methods: {
     async getData(){
       const response = await axios.get("http://localhost:4000/1");
