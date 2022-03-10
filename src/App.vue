@@ -1,9 +1,11 @@
 <template>
+  <router-view />
   <img alt="Vue logo" src="./assets/logo.png">
-  <div>
-    <h4>{{state.name}}</h4>
-    <button @click="getData">가져오기</button>
+  <div v-for="(item, index) in state.stats" :key="index" >
+    <span>ID: {{item.id}}</span>
+    <span style="margin-left: 10px;">NAME: {{item.name}}</span>
   </div>
+  <button @click="onClick()">Add to Discord</button>
 </template>
 
 <script>
@@ -22,27 +24,34 @@ export default {
 
   setup() {
     const state = reactive({
-      name: '',
+      stats: [
+        {
+          id:0,
+          name:''
+        }
+      ],
     });
 
     onMounted( async() => {
-      const overview = await axios.get("http://localhost:4000/1");
+      
+      const overview = await axios.get("http://localhost:4000/overview");
       if(overview){
-       state.name = overview.data ;
+       state.stats = overview.data ;
       }//if
     });
+
+    const onClick = () => {      
+      location.href=`https://discord.com/api/oauth2/authorize?${process.env.VUE_APP_IDENTIFY}`;
+    };
+
     return {
-      state
+      state,
+      onClick
       };
   },
 
 
   methods: {
-    async getData(){
-      const response = await axios.get("http://localhost:4000/1");
-      // console.log(response)
-      this.response = response.data
-    }
   },
 };
 </script>
