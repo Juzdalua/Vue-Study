@@ -1,16 +1,25 @@
 <template>
+<div>
   <router-view />
   <img alt="Vue logo" src="./assets/logo.png">
+  <!-- <div>
+    <input type="text" />
+    <button @click="onClickPutStore()">Store</button>
+    <span></span>
+  </div> -->
   <div v-for="(item, index) in state.stats" :key="index" >
     <span>ID: {{item.id}}</span>
     <span style="margin-left: 10px;">NAME: {{item.name}}</span>
   </div>
-  <button @click="onClick()">Add to Discord</button>
+  <button @click="onClickFrontend()">Add to Discord with Frontend</button><br/>
+  <button @click="onClickBackend()">Add to Discord with Backend</button>
+</div>
 </template>
 
 <script>
-import {onMounted, reactive} from "vue";
+import {onMounted, reactive, computed} from "vue";
 import axios from "axios";
+import { useStore } from 'vuex';
 // import data from "./data";
 
 export default {  
@@ -23,6 +32,7 @@ export default {
   },
 
   setup() {
+    const store = useStore();
     const state = reactive({
       stats: [
         {
@@ -30,6 +40,7 @@ export default {
           name:''
         }
       ],
+      response: computed( () => store.state.response)
     });
 
     onMounted( async() => {
@@ -40,13 +51,25 @@ export default {
       }//if
     });
 
-    const onClick = () => {      
-      location.href=`https://discord.com/api/oauth2/authorize?${process.env.VUE_APP_IDENTIFY}`;
+    const onClickFrontend = () => {      
+      location.href=`https://discord.com/api/oauth2/authorize?${process.env.VUE_APP_IDENTIFY_FRONT}`;
+    };
+
+    const onClickBackend = () => {      
+      location.href=`https://discord.com/api/oauth2/authorize?${process.env.VUE_APP_IDENTIFY_BACK}`;
+      
+    };
+
+    const onClickPutStore = () => {
+
     };
 
     return {
+      store,
       state,
-      onClick
+      onClickPutStore,
+      onClickFrontend,
+      onClickBackend
       };
   },
 
