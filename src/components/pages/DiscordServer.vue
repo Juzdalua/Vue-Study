@@ -36,7 +36,7 @@ export default {
                             client_secret: process.env.VUE_APP_CLIENT_SECRET,
                             code,
                             grant_type: 'authorization_code',
-                            redirect_uri: `http://localhost:8080/discord`,
+                            redirect_uri: `http://localhost:4000/discord/signin`,
                             scope: 'identify',
                         }),
                         headers: {

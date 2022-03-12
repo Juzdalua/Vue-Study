@@ -1,5 +1,8 @@
 <template>
 <div>
+  <div>
+    <button @click="goHome()">HOME</button>
+  </div>
   <router-view />
   <img alt="Vue logo" src="./assets/logo.png">
   <!-- <div>
@@ -75,6 +78,10 @@ export default {
 
 
   methods: {
+    goHome(){
+      location.href="http://localhost:8080";
+    },
+
   },
 };
 </script>
