@@ -13,9 +13,15 @@
   <div v-for="(item, index) in state.stats" :key="index" >
     <span>ID: {{item.id}}</span>
     <span style="margin-left: 10px;">NAME: {{item.name}}</span>
+    <span style="margin-left: 10px;">AGE: {{item.age}}</span>
   </div>
   <button @click="onClickFrontend()">Add to Discord with Frontend</button><br/>
   <button @click="onClickBackend()">Add to Discord with Backend</button>
+  <form v-on:submit.prevent="onSubmitForm()">
+    <input v-model="name" id="name" type="text" placeholder="name"/>
+    <input v-model="age" id="age" type="number" placeholder="age"/>
+    <input type="submit"/>
+  </form>
 </div>
 </template>
 
@@ -30,7 +36,9 @@ export default {
   components: {},
   data(){
     return {
-      response: "Home"
+      response: "Home",
+      name: "",
+      age: "",
     }
   },
 
@@ -40,7 +48,8 @@ export default {
       stats: [
         {
           id:0,
-          name:''
+          name:'',
+          age:'',
         }
       ],
       response: computed( () => store.state.response)
@@ -48,7 +57,7 @@ export default {
 
     onMounted( async() => {
       
-      const overview = await axios.get("http://localhost:4000/overview");
+      const overview = await axios.get("http://localhost:4000/overview?page=1");
       if(overview){
        state.stats = overview.data ;
       }//if
@@ -81,6 +90,24 @@ export default {
     goHome(){
       location.href="http://localhost:8080";
     },
+
+    async onSubmitForm(){          
+      // console.log(this.name, this.age);
+      if(this.name && this.age){
+        const body = {
+          name: this.name,
+          age: this.age,
+        };
+        const result = await axios.post(`http://localhost:4000/user/create`, body, {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+        // console.log(result);
+        if(result.status === 201)
+          this.$router.go();
+      } //if
+    }, //onSubmitForm
 
   },
 };
