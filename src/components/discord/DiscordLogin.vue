@@ -1,7 +1,7 @@
 <template>
 <div>
     <div style="display: flex; justify-content:center;">
-        <span v-if="state.guilds.length===0">HI Discord</span> 
+        <span v-if="state.guilds.length===0">HI Discord</span>
         <div v-if="state.guilds.length!==0" style="padding:20px; border:1px solid black; cursor:pointer;">
             <h2>{{state.user.username}}</h2>
             <h2 v-for="(item, index) in state.guilds" :key="index">{{state.guilds.length !== 0 ? state.guilds[0].name : ''}}</h2>
@@ -14,7 +14,7 @@
 import {onMounted, reactive} from "vue";
 
 export default {
-    name: 'App',
+    name: 'DiscordLogin',
     components: {},
 
     setup(){
@@ -26,7 +26,7 @@ export default {
         let loginUser, guildsList;
         onMounted( async() => {
             const url = new URL(window.location.href);
-            const code = url.searchParams.get("code")                       
+            const code = url.searchParams.get("code")
             if(code){
                 try {
                     const oauthResult = await fetch(`https://discord.com/api/oauth2/token`, {
@@ -46,17 +46,17 @@ export default {
                     const oauthData = await oauthResult.json();
                     if(!oauthData.access_token)
                         return;
-                    
+
                     const userResult = await fetch('https://discord.com/api/users/@me', {
                         headers: {
                             authorization: `${oauthData.token_type} ${oauthData.access_token}`,
                         },
-                    });      
+                    });
                     const guildsResult = await fetch('https://discord.com/api/users/@me/guilds', {
                         headers: {
                             authorization: `${oauthData.token_type} ${oauthData.access_token}`,
                         },
-                    });                   
+                    });
                     loginUser = await userResult.json();
                     guildsList = await guildsResult.json();
                     console.log(loginUser, guildsList[0]);
@@ -70,13 +70,13 @@ export default {
                 }
 
             }
-            
+
         });
         return {
             state,
         };
     },
-   
+
 }
 </script>
 
