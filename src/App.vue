@@ -1,7 +1,11 @@
 <template>
-  <div>
-    <button @click="goDiscord()" >Go Discord</button>
-  </div>
+<div>
+  <button class="home" >
+    <router-link to="/">Home</router-link>
+  </button><br/>
+
+  <router-view />
+</div>
 </template>
 
 <script>
@@ -9,22 +13,23 @@
     name: "app",
     components: {},
     props: {},
-    // data(){
-    //   return {
-
-    //   },
-    // },
-    setup(){
-      const goDiscord = () => {
-
-      }
+    data(){
       return {
-        goDiscord,
+
+      };
+    },
+    setup(){
+
+      return {
+
       };
     }
   }
 </script>
 
 <style>
-
+  .home{
+    padding: 10px;
+    margin-bottom: 10px;
+  }
 </style>
