@@ -14,6 +14,9 @@
     <button @click="goDiscord()" >
       <router-link to="/discover/topbanner">Topbanner POST</router-link>
     </button>
+    <button @click="goDiscord()" >
+      <router-link to="/discover/article">Article POST</router-link>
+    </button>
   </div>
   <router-view />
 </div>

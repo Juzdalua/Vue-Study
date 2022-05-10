@@ -5,6 +5,7 @@ import DiscordLogin from "../components/discord/DiscordLogin.vue";
 import DiscordServer from "../components/discord/DiscordServer.vue";
 import UpcomingHome from "../components/discover/upcoming/Upcoming.vue"
 import TopbannerHome from "../components/discover/topbanner/Topbanner.vue"
+import ArticleHome from "../components/discover/article/Article.vue";
 
 export default createRouter({
     history: createWebHistory(),
@@ -32,6 +33,10 @@ export default createRouter({
         {
             path: "/discover/topbanner",
             component: TopbannerHome
+        },
+        {
+            path: "/discover/article",
+            component: ArticleHome
         },
     ],
 });
